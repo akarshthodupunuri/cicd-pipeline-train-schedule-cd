@@ -8,13 +8,12 @@ pipeline {
                 archiveArtifacts 'dist/trainSchedule.zip'
             }
         }
-
         stage('deploy to staging') {
             when {
                 branch 'master'
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'password')]) {
                 sshPublisher( 
                     failOnError: true,
                     continueOnError: false,
@@ -22,8 +21,8 @@ pipeline {
                         sshPublisherDesc(
                             configName: 'staging',
                             sshCredentials: [
-                                username: '$USERNAME'
-                                encryptedPassphrase: '$USERPASS'
+                                username: "$USERNAME",
+                                password: "$password"
                             ]
                             transfers: [
                                 sshTransfer(
@@ -47,7 +46,7 @@ pipeline {
             steps {
                 input 'does the stage environment looks good?'
                 milestone(1)
-                withCredentials([usernamePassword(credentialsId: 'webserver_login', passwordVariable: 'USERPASS', usernameVariable: 'USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: 'webserver_login', passwordVariable: 'password', usernameVariable: 'USERNAME')]) {
                     sshPublisher(
                         failOnError: true,
                         continueOnError: false,
@@ -55,8 +54,8 @@ pipeline {
                             sshPublisherDesc(
                                 configName: 'production',
                                 sshCredentials: [
-                                    username: '$USERNAME'
-                                    encryptedPassphrase: '$USERPASS'
+                                    username: "$USERNAME",
+                                    password: "$password"
                                 ]
                             )
                         ]
