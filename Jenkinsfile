@@ -23,7 +23,7 @@ pipeline {
                             sshCredentials: [
                                 username: "$USERNAME",
                                 password: "$password"
-                            ]
+                            ],
                             transfers: [
                                 sshTransfer(
                                     sourceFiles: 'dist/trainSchedule.zip',
@@ -58,7 +58,7 @@ pipeline {
                                     password: "$password"
                                 ]
                             )
-                        ]
+                        ],
                         transfers: [
                             sshTransfer(
                                 execCommand: 'sudo /usr/bin/systemctl stop train-schedule && rm -rf /opt/train-schedule/* && unzip /tmp/trainSchedule.zip -d /opt/train-schedule && /usr/bin/systemctl start train-schedule ', 
