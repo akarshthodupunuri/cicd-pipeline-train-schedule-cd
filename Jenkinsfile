@@ -41,7 +41,7 @@ pipeline {
 
         stage('deploy to production') {
             when {
-                branch: 'master'
+                branch 'master'
             }
             steps {
                 input 'does the stage environment looks good?'
@@ -56,18 +56,17 @@ pipeline {
                                 sshCredentials: [
                                     username: "$USERNAME",
                                     password: "$password"
-                                ]
-                            )
-                        ],
-                        transfers: [
-                            sshTransfer(
-                                execCommand: 'sudo /usr/bin/systemctl stop train-schedule && rm -rf /opt/train-schedule/* && unzip /tmp/trainSchedule.zip -d /opt/train-schedule && /usr/bin/systemctl start train-schedule ', 
-                                remoteDirectory: '/tmp',
-                                removePrefix: 'dist/',
-                                sourceFiles: 'dist/trainSchedule.zip'
-                            )
-                        ]
-                    )
+                              	],
+                        	transfers: [
+                            		sshTransfer(
+                                		execCommand: 'sudo /usr/bin/systemctl stop train-schedule && rm -rf /opt/train-schedule/* && unzip /tmp/trainSchedule.zip -d /opt/train-schedule && /usr/bin/systemctl start train-schedule ', 
+                               			remoteDirectory: '/tmp',
+                                		removePrefix: 'dist/',
+                                		sourceFiles: 'dist/trainSchedule.zip'
+                            		)
+                       		 ]
+                             )
+			]
                    }
 
             }
