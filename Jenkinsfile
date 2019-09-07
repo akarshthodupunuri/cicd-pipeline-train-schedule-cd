@@ -23,7 +23,7 @@ pipeline {
                             configName: 'staging',
                             sshCredentials: [
                                 username: '$USERNAME'
-                                password: '$password'
+                                encryptedPassphrase: '$password'
                             ]
                             transfers: [
                                 sshTransfer(
@@ -56,7 +56,7 @@ pipeline {
                                 configName: 'production',
                                 sshCredentials: [
                                     username: '$USERNAME'
-                                    password: '$password'
+                                    encryptedPassphrase: '$password'
                                 ]
                             )
                         ]
